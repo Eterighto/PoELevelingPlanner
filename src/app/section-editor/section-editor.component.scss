@@ -1,0 +1,11 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+.fb-3 > * {
+  flex-basis: calc(33% - 0.5rem);
+}
+
+.card {
+  border-radius: 0.5rem;
+  background-color: mat.get-color-from-palette(mat.$gray-palette, 800);
+}

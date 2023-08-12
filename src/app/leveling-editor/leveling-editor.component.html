@@ -1,0 +1,105 @@
+<div class="h-full flex flex-column row-gap-3 overflow-y-auto">
+  <ng-container *ngFor="let section of sections; let sectionIndex = index">
+    <mat-card>
+      <mat-card-content>
+        <div class="flex flex-row column-gap-2 align-items-center mb-3">
+          <h2 class="mr-auto mb-0">{{ section.name }}</h2>
+
+          <button (click)="editSection(sectionIndex)" mat-icon-button>
+            <mat-icon>settings</mat-icon>
+          </button>
+          <button (click)="deleteSection(sectionIndex)" mat-icon-button>
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+
+        <div class="text-base grid-bordered">
+          <!-- Quests -->
+          <ng-container *ngIf="section.actId != null && section.questRewards.length > 0">
+            <div class="grid grid-nogutter text-lg">
+              <div class="col font-medium">
+                Quest
+              </div>
+              <div class="col font-medium">
+                Gem
+              </div>
+              <div class="col font-medium">
+                Method
+              </div>
+            </div>
+
+            <ng-container *ngFor="let questReward of section.questRewards">
+              <div class="grid grid-nogutter">
+                <div class="col">
+                  {{ getQuestName(questReward.questId) }}
+                </div>
+                <div class="col" [ngClass]="getGemTypeClassByName(questReward.gemId)">
+                  {{ questReward.gemId }}
+                </div>
+                <div class="col" [ngClass]="getObtainMethodClass(questReward.method)">
+                  {{ getObtainMethodName(questReward.method) }}
+                </div>
+              </div>
+            </ng-container>
+          </ng-container>
+
+          <!-- Lab -->
+          <ng-container *ngIf="section.labMasteryReward">
+            <div class="grid grid-nogutter">
+              <div class="col text-lg font-medium labirynth">
+                Labirynth
+              </div>
+              <div class="col">
+                {{ section.labMasteryReward }}
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- Links -->
+          <ng-container *ngIf="section.links.length > 0">
+            <div class="grid grid-nogutter">
+              <div class="col text-lg font-medium">
+                Links
+              </div>
+            </div>
+            <div class="grid grid-nogutter">
+              <div class="col">
+                <div class="flex flex-column">
+                  <ng-container *ngFor="let link of section.links">
+                    <div class="flex flex-row flex-wrap column-gap-2">
+                      <ng-container *ngFor="let gem of link; let index = index">
+                        <div [ngClass]="getGemTypeClassByName(gem)">
+                          {{ gem }}
+                        </div>
+
+                        <div *ngIf="index < link.length - 1">-</div>
+                      </ng-container>
+                    </div>
+                  </ng-container>
+                </div>
+              </div>
+            </div>
+          </ng-container>
+
+          <!-- Notes -->
+          <ng-container *ngIf="section.notes">
+            <div class="grid grid-nogutter">
+              <div class="col text-lg font-medium">
+                Notes
+              </div>
+            </div>
+            <div class="grid grid-nogutter notes">
+              <div class="col" [innerHTML]="treatAsSafeString(section.notes)">
+              </div>
+            </div>
+          </ng-container>
+        </div>
+
+      </mat-card-content>
+    </mat-card>
+  </ng-container>
+
+  <button color="accent" (click)="editSection()" mat-raised-button>
+    Add section
+  </button>
+</div>

@@ -1,0 +1,11 @@
+@use "sass:map";
+@use "@angular/material" as mat;
+
+.navbar {
+  background-color: mat.get-color-from-palette(mat.$purple-palette, 700);
+}
+
+.application-name {
+  font-size: 1.5rem;
+  font-weight: 500;
+}

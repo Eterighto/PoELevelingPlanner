@@ -1,4 +1,79 @@
-/* You can add global styles to this file, and also import other style files */
+@use "sass:map";
+@use "@angular/material" as mat;
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+@import "~quill/dist/quill.snow.css";
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.gem {
+  &-dex {
+    color: limegreen !important;
+  }
+
+  &-str {
+    color: crimson !important;
+  }
+
+  &-int {
+    color: deepskyblue !important;
+  }
+}
+
+.method {
+  &-vendor {
+    color: orange;
+  }
+
+  &-reward {
+    color: deeppink;
+  }
+}
+
+.labirynth {
+  color: limegreen;
+}
+
+.notes {
+  p {
+    margin-bottom: 0 !important;
+  }
+}
+
+.ql-formats {
+  margin-right: 0 !important;
+}
+
+.ql-toolbar,
+.ql-editor,
+.ql-picker-options,
+.ql-container {
+  background-color: mat.get-color-from-palette(
+    mat.$gray-palette,
+    600
+  ) !important;
+  border-color: mat.get-color-from-palette(mat.$gray-palette, 700) !important;
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  border-radius: 6px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  background-color: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 6px;
+  -webkit-box-shadow: inset 0 0 3px rgba(0, 0, 0, 0.3);
+  background-color: mat.get-color-from-palette(mat.$purple-palette, 700);
+}
