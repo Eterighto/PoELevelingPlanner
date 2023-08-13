@@ -174,6 +174,7 @@ export class SectionEditorComponent implements OnInit {
       );
 
       this.gems = [...this.gemDictService.gemDict.values()];
+      this.filteredGems = this.gems;
       this.onQuestGemSelectorOpen();
 
       this.gemFormGroup.reset();

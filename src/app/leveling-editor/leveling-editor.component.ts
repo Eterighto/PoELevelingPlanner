@@ -37,67 +37,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 export class LevelingEditorComponent implements OnInit, OnDestroy {
   private readonly destroy$ = new Subject();
 
-  sections: Section[] = [
-    // {
-    //   name: 'Act 1',
-    //   actId: ActId.One,
-    //   labMasteryReward: 'Shaper of Storms',
-    //   links: [
-    //     ['Stormblast Mine', 'Swift Assembly', 'Added Lightning Damage'],
-    //     ['Frostblink', 'Arcane Surge', 'Frost Bomb'],
-    //     ['Orb of Storms', 'Chance to Poison', 'Added Lightning Damage'],
-    //   ],
-    //   notes:
-    //     '<p>Pls send <strong style="color: crimson;">help</strong></p><p>Heeeeelp</p>',
-    //   questRewards: [
-    //     {
-    //       questId: 0,
-    //       gemId: 'Stormblast Mine',
-    //       method: ObtainMethod.Vendor,
-    //     },
-    //     {
-    //       questId: 1,
-    //       gemId: 'Chance to Poison',
-    //       method: ObtainMethod.Reward,
-    //     },
-    //     {
-    //       questId: 1,
-    //       gemId: 'Swift Assembly',
-    //       method: ObtainMethod.Vendor,
-    //     },
-    //     {
-    //       questId: 2,
-    //       gemId: 'Frost Bomb',
-    //       method: ObtainMethod.Reward,
-    //     },
-    //     {
-    //       questId: 2,
-    //       gemId: 'Orb of Storms',
-    //       method: ObtainMethod.Vendor,
-    //     },
-    //     {
-    //       questId: 2,
-    //       gemId: 'Frostblink',
-    //       method: ObtainMethod.Vendor,
-    //     },
-    //     {
-    //       questId: 3,
-    //       gemId: 'Added Lightning Damage',
-    //       method: ObtainMethod.Reward,
-    //     },
-    //     {
-    //       questId: 3,
-    //       gemId: 'Added Lightning Damage',
-    //       method: ObtainMethod.Vendor,
-    //     },
-    //     {
-    //       questId: 4,
-    //       gemId: 'Blade Vortex',
-    //       method: ObtainMethod.Vendor,
-    //     },
-    //   ],
-    // },
-  ];
+  sections: Section[] = [];
 
   constructor(
     private dialogService: Dialog,
@@ -125,66 +65,6 @@ export class LevelingEditorComponent implements OnInit, OnDestroy {
         this.snackBar.open('An error occured while loading build');
       }
     }
-
-    // let name = 'Stormblast Mine';
-    // gemDict.set(name, {
-    //   name: name,
-    //   type: GemType.Int,
-    // });
-
-    // name = 'Chance to Poison';
-    // gemDict.set(name, {
-    //   name: name,
-    //   type: GemType.Dex,
-    // });
-
-    // name = 'Swift Assembly';
-    // gemDict.set(name, {
-    //   name: name,
-    //   type: GemType.Dex,
-    // });
-
-    // name = 'Frost Bomb';
-    // gemDict.set(name, {
-    //   name: name,
-    //   type: GemType.Int,
-    // });
-
-    // name = 'Orb of Storms';
-    // gemDict.set(name, {
-    //   name: name,
-    //   type: GemType.Int,
-    // });
-
-    // name = 'Frostblink';
-    // gemDict.set(name, {
-    //   name: name,
-    //   type: GemType.Int,
-    // });
-
-    // name = 'Added Cold Damage';
-    // gemDict.set(name, {
-    //   name: name,
-    //   type: GemType.Dex,
-    // });
-
-    // name = 'Added Lightning Damage';
-    // gemDict.set(name, {
-    //   name: name,
-    //   type: GemType.Int,
-    // });
-
-    // name = 'Blade Vortex';
-    // gemDict.set(name, {
-    //   name: name,
-    //   type: GemType.Dex,
-    // });
-
-    // name = 'Arcane Surge';
-    // gemDict.set(name, {
-    //   name: name,
-    //   type: GemType.Int,
-    // });
   }
 
   ngOnDestroy(): void {
