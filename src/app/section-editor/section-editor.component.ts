@@ -150,8 +150,12 @@ export class SectionEditorComponent implements OnInit {
     }
   }
 
-  onQuestGemSelectorOpen(): void {
+  onQuestGemSelectorOpen(searchInput?: HTMLInputElement): void {
     this.filteredGems = this.gems;
+    if (searchInput) {
+      searchInput.value = '';
+      searchInput.focus();
+    }
   }
 
   createQuestRewardFormGroup(questReward?: QuestReward): FormGroup {

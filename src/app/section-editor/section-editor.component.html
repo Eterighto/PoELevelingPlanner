@@ -115,11 +115,11 @@
 
     <mat-form-field>
       <mat-label>Gem</mat-label>
-      <mat-select (opened)="onQuestGemSelectorOpen()"
+      <mat-select (opened)="onQuestGemSelectorOpen(searchInput)"
         [ngClass]="getGemTypeClassByName(questRewardForm.controls.gemId?.value)" formControlName="gemId"
         #questGemSelect>
         <mat-form-field class="max-w-full">
-          <input placeholder="Search" (input)="onGemSearchInput($event)" matInput />
+          <input placeholder="Search" (input)="onGemSearchInput($event)" matInput #searchInput />
         </mat-form-field>
         <ng-container *ngIf="questGemSelect.panelOpen; else panelClosed">
           <mat-option *ngFor="let gem of filteredGems" [value]="gem.name" [ngClass]="getGemTypeClass(gem.type)">
@@ -151,10 +151,10 @@
   <ng-container *ngFor="let gemControl of gemLinkFormArray.controls">
     <mat-form-field>
       <mat-label>Gem</mat-label>
-      <mat-select (opened)="onQuestGemSelectorOpen()" [ngClass]="getGemTypeClassByName(gemControl.value)"
+      <mat-select (opened)="onQuestGemSelectorOpen(searchInput)" [ngClass]="getGemTypeClassByName(gemControl.value)"
         [formControl]="gemControl" #linkGemSelect>
         <mat-form-field class="max-w-full">
-          <input placeholder="Search" (input)="onGemSearchInput($event)" matInput />
+          <input placeholder="Search" (input)="onGemSearchInput($event)" matInput #searchInput />
         </mat-form-field>
         <ng-container *ngIf="linkGemSelect.panelOpen; else panelClosed">
           <mat-option *ngFor="let gem of filteredGems" [value]="gem.name" [ngClass]="getGemTypeClass(gem.type)">
