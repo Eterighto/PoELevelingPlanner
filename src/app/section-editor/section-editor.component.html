@@ -25,37 +25,7 @@
       <mat-hint>Skip if not doing lab</mat-hint>
     </mat-form-field>
 
-    <div class="flex flex-column" [formGroup]="gemFormGroup">
-      <h3>Gem dictionary</h3>
-
-      <div class="flex flex-row flex-grow-1 column-gap-2">
-        <mat-form-field>
-          <mat-label>Gem name</mat-label>
-          <input placeholder="Blade vortex" formControlName="name"
-            [ngClass]="getGemTypeClass(gemFormGroup.controls['type'].value)" [matAutocomplete]="auto" matInput />
-          <mat-autocomplete (optionSelected)="onGemDictSelection($event.option.value)" #auto="matAutocomplete">
-            <mat-option *ngFor="let gem of gems" [value]="gem" [ngClass]="getGemTypeClass(gem.type)">
-              {{ gem.name }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-
-        <mat-form-field>
-          <mat-label>Gem type</mat-label>
-          <mat-select formControlName="type" [ngClass]="getGemTypeClass(gemFormGroup.controls['type'].value)">
-            <mat-option *ngFor="let gemType of gemTypes" [value]="gemType.type"
-              [ngClass]="getGemTypeClass(gemType.type)">
-              {{ gemType.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-
-        <button class="my-1" (click)="saveGem()" mat-icon-button>
-          <mat-icon color="accent">done</mat-icon>
-        </button>
-      </div>
-    </div>
-
+    <!-- Quests -->
     <div class="flex flex-column">
       <h3>Quests</h3>
 
@@ -85,6 +55,7 @@
       </div>
     </div>
 
+    <!-- Links -->
     <div class="flex flex-column">
       <h3>Links</h3>
 
@@ -150,10 +121,18 @@
         <mat-form-field class="max-w-full">
           <input placeholder="Search" (input)="onGemSearchInput($event)" matInput />
         </mat-form-field>
-        <mat-option *ngFor="let gem of questGemSelect.panelOpen ? filteredGems : gems" [value]="gem.name"
-          [ngClass]="getGemTypeClass(gem.type)">
-          {{ gem.name }}
-        </mat-option>
+        <ng-container *ngIf="questGemSelect.panelOpen; else panelClosed">
+          <mat-option *ngFor="let gem of filteredGems" [value]="gem.name" [ngClass]="getGemTypeClass(gem.type)">
+            {{ gem.name }}
+          </mat-option>
+        </ng-container>
+
+        <ng-template #panelClosed>
+          <mat-option [value]="questRewardForm.controls.gemId?.value"
+            [ngClass]="getGemTypeClass(getGemTypeByName(questRewardForm.controls.gemId?.value))">
+            {{ questRewardForm.controls.gemId?.value }}
+          </mat-option>
+        </ng-template>
       </mat-select>
     </mat-form-field>
 
@@ -174,13 +153,20 @@
       <mat-label>Gem</mat-label>
       <mat-select (opened)="onQuestGemSelectorOpen()" [ngClass]="getGemTypeClassByName(gemControl.value)"
         [formControl]="gemControl" #linkGemSelect>
-        <mat-form-field>
+        <mat-form-field class="max-w-full">
           <input placeholder="Search" (input)="onGemSearchInput($event)" matInput />
         </mat-form-field>
-        <mat-option *ngFor="let gem of linkGemSelect.panelOpen? filteredGems : gems" [value]="gem.name"
-          [ngClass]="getGemTypeClass(gem.type)">
-          {{ gem.name }}
-        </mat-option>
+        <ng-container *ngIf="linkGemSelect.panelOpen; else panelClosed">
+          <mat-option *ngFor="let gem of filteredGems" [value]="gem.name" [ngClass]="getGemTypeClass(gem.type)">
+            {{ gem.name }}
+          </mat-option>
+        </ng-container>
+
+        <ng-template #panelClosed>
+          <mat-option [value]="gemControl.value" [ngClass]="getGemTypeClass(getGemTypeByName(gemControl.value))">
+            {{ gemControl.value }}
+          </mat-option>
+        </ng-template>
       </mat-select>
       <button *ngIf="gemControl.value" (click)="gemControl.reset(); $event.stopPropagation()" matSuffix mat-icon-button>
         <mat-icon>close</mat-icon>

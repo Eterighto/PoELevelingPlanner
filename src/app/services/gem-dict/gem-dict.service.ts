@@ -1,21 +1,15 @@
 import { Injectable } from '@angular/core';
-
-export enum GemType {
-  Int = 1,
-  Dex = 2,
-  Str = 3,
-}
-
-export interface Gem {
-  type: GemType | null;
-  name: string | null;
-}
+import { Gem, gems } from 'src/data/gems';
 
 @Injectable({
   providedIn: 'root',
 })
 export class GemDictService {
-  gemDict = new Map<string, Gem>();
+  readonly gemDict = new Map<string, Gem>();
+  readonly gemsList!: Gem[];
 
-  constructor() {}
+  constructor() {
+    gems.forEach((gemData: Gem) => this.gemDict.set(gemData.name, gemData));
+    this.gemsList = [...this.gemDict.values()];
+  }
 }

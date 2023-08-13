@@ -8,11 +8,8 @@ import {
 } from '@angular/core';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Quest, acts, quests } from 'src/data/quests';
-import {
-  Gem,
-  GemDictService,
-  GemType,
-} from '../services/gem-dict/gem-dict.service';
+import { GemDictService } from '../services/gem-dict/gem-dict.service';
+import { Gem, GemType } from 'src/data/gems';
 
 export enum ObtainMethod {
   Vendor = 1,
@@ -49,7 +46,6 @@ export interface Section {
   selector: 'app-section-editor',
   templateUrl: './section-editor.component.html',
   styleUrls: ['./section-editor.component.scss'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SectionEditorComponent implements OnInit {
   readonly acts = [
@@ -61,37 +57,21 @@ export class SectionEditorComponent implements OnInit {
   ];
 
   gems!: Gem[];
-  gemTypes = [
-    {
-      type: GemType.Dex,
-      name: 'Dex',
-    },
-    {
-      type: GemType.Int,
-      name: 'Int',
-    },
-    {
-      type: GemType.Str,
-      name: 'Str',
-    },
-  ];
   obtainMethods = obtainMethods;
   filteredGems!: Gem[];
   quests!: Quest[];
   sectionFormGroup!: FormGroup;
-  gemFormGroup!: FormGroup;
   newQuestRewardForm!: FormGroup;
   newGemLinkForm!: FormArray;
 
   constructor(
     public dialogRef: DialogRef,
     @Inject(DIALOG_DATA) public data: Section,
-    private gemDictService: GemDictService,
-    private cdr: ChangeDetectorRef
+    private gemDictService: GemDictService
   ) {}
 
   ngOnInit(): void {
-    this.gems = [...this.gemDictService.gemDict.values()];
+    this.gems = this.gemDictService.gemsList;
     this.filteredGems = this.gems;
 
     this.sectionFormGroup = new FormGroup({
@@ -123,15 +103,8 @@ export class SectionEditorComponent implements OnInit {
       }
     }
 
-    this.gemFormGroup = new FormGroup({
-      name: new FormControl(null, Validators.required),
-      type: new FormControl(null, Validators.required),
-    });
-
     this.newQuestRewardForm = this.createQuestRewardFormGroup();
     this.newGemLinkForm = this.createGemLinkFormArray();
-
-    this.cdr.detectChanges();
   }
 
   onActIdChange(actId?: number): void {
@@ -157,31 +130,12 @@ export class SectionEditorComponent implements OnInit {
     return gemTypeClass;
   }
 
+  getGemTypeByName(name: string): GemType {
+    return this.gemDictService.gemDict.get(name)?.type as GemType;
+  }
+
   getGemTypeClassByName(name: string): string {
-    return this.getGemTypeClass(this.gemDictService.gemDict.get(name)?.type);
-  }
-
-  onGemDictSelection(gem: Gem): void {
-    this.gemFormGroup.patchValue(gem);
-  }
-
-  saveGem(): void {
-    if (this.gemFormGroup.valid) {
-      const gemToSave: Gem = this.gemFormGroup.getRawValue();
-      this.gemDictService.gemDict.set(
-        (gemToSave.name as string).toLowerCase(),
-        gemToSave
-      );
-
-      this.gems = [...this.gemDictService.gemDict.values()];
-      this.filteredGems = this.gems;
-      this.onQuestGemSelectorOpen();
-
-      this.gemFormGroup.reset();
-      this.cdr.detectChanges();
-    } else {
-      this.gemFormGroup.markAllAsTouched();
-    }
+    return this.getGemTypeClass(this.getGemTypeByName(name));
   }
 
   onGemSearchInput(inputEvent?: Event): void {
@@ -217,7 +171,6 @@ export class SectionEditorComponent implements OnInit {
     } else {
       this.newQuestRewardForm.markAllAsTouched();
     }
-    this.cdr.detectChanges();
   }
 
   removeQuestReward(index: number): void {
@@ -250,7 +203,6 @@ export class SectionEditorComponent implements OnInit {
     } else {
       this.newGemLinkForm.markAllAsTouched();
     }
-    this.cdr.detectChanges();
   }
 
   removeGemLink(index: number): void {
@@ -268,7 +220,6 @@ export class SectionEditorComponent implements OnInit {
       this.close(section);
     } else {
       this.sectionFormGroup.markAllAsTouched();
-      this.cdr.detectChanges();
     }
   }
 

@@ -14,19 +14,12 @@ import {
 } from '../section-editor/section-editor.component';
 import { b64DecodeUnicode, b64EncodeUnicode } from 'src/utilities/encoding';
 import { Subject, takeUntil } from 'rxjs';
-import {
-  Gem,
-  GemDictService,
-  GemType,
-} from '../services/gem-dict/gem-dict.service';
+import { GemDictService } from '../services/gem-dict/gem-dict.service';
 import { ActId, Quest, quests } from 'src/data/quests';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import {
-  ActivatedRoute,
-  ActivatedRouteSnapshot,
-  Router,
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { GemType } from 'src/data/gems';
 
 @Component({
   selector: 'app-leveling-editor',
@@ -51,16 +44,10 @@ export class LevelingEditorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     const data = this.activatedRoute.snapshot.queryParamMap.get('data');
-    const dict = this.activatedRoute.snapshot.queryParamMap.get('dict');
 
-    const gemDict = this.gemDictService.gemDict;
-
-    if (data && dict) {
+    if (data) {
       try {
         this.sections = JSON.parse(b64DecodeUnicode(data as string));
-
-        const gems: Gem[] = JSON.parse(b64DecodeUnicode(dict as string));
-        gems.forEach((gem: Gem) => gemDict.set(gem.name as string, gem));
       } catch (error) {
         this.snackBar.open('An error occured while loading build');
       }
@@ -87,6 +74,8 @@ export class LevelingEditorComponent implements OnInit, OnDestroy {
       data: data,
     });
 
+    this.cdr.detectChanges();
+
     dialogRef.closed
       .pipe(takeUntil(this.destroy$))
       .subscribe((section?: Section) => {
@@ -107,7 +96,7 @@ export class LevelingEditorComponent implements OnInit, OnDestroy {
     return quests.find((quest: Quest) => quest.id === id)?.name ?? '-';
   }
 
-  getGemTypeClass(type?: GemType | null): string {
+  getGemTypeClass(type?: GemType): string {
     let gemTypeClass = '';
 
     switch (type) {
@@ -165,9 +154,6 @@ export class LevelingEditorComponent implements OnInit, OnDestroy {
       replaceUrl: true,
       queryParams: {
         data: b64EncodeUnicode(JSON.stringify(this.sections)),
-        dict: b64EncodeUnicode(
-          JSON.stringify([...this.gemDictService.gemDict.values()])
-        ),
       },
     });
   }
