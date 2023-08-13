@@ -93,11 +93,11 @@ export const quests: ReadonlyArray<Quest> = [
   {
     id: 10,
     actId: ActId.Four,
-    name: 'Sever the Right Hand',
+    name: 'Breaking the Seal',
   },
   {
     id: 11,
     actId: ActId.Four,
-    name: 'Fixture of Fate',
+    name: 'The Eternal Nightmare',
   },
 ];
