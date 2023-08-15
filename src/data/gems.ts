@@ -2417,4 +2417,74 @@ export const gems: ReadonlyArray<Gem> = [
     type: GemType.Int,
     level: 38,
   },
+  {
+    name: 'Controlled Blaze',
+    type: GemType.Str,
+    level: 1,
+  },
+  {
+    name: 'Corrupting Cry',
+    type: GemType.Str,
+    level: 1,
+  },
+  {
+    name: 'Flamewood',
+    type: GemType.Str,
+    level: 1,
+  },
+  {
+    name: "Guardian's Blessing",
+    type: GemType.Str,
+    level: 1,
+  },
+  {
+    name: 'Trauma',
+    type: GemType.Str,
+    level: 1,
+  },
+  {
+    name: 'Volatility',
+    type: GemType.Str,
+    level: 1,
+  },
+  {
+    name: 'Locus Mine',
+    type: GemType.Dex,
+    level: 1,
+  },
+  {
+    name: 'Returning Projectiles',
+    type: GemType.Dex,
+    level: 1,
+  },
+  {
+    name: 'Sadism',
+    type: GemType.Dex,
+    level: 1,
+  },
+  {
+    name: 'Devour',
+    type: GemType.Int,
+    level: 1,
+  },
+  {
+    name: 'Fresh Meat',
+    type: GemType.Int,
+    level: 1,
+  },
+  {
+    name: 'Frigid Bond',
+    type: GemType.Int,
+    level: 1,
+  },
+  {
+    name: 'Sacrifice',
+    type: GemType.Int,
+    level: 1,
+  },
+  {
+    name: 'Spellblade',
+    type: GemType.Int,
+    level: 1,
+  },
 ];
